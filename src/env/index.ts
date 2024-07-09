@@ -1,20 +1,19 @@
-import 'dotenv/config';
-import { z } from 'zod';
+import 'dotenv/config'
+import { z } from 'zod'
 
-//process.env: {NODE_ENV: 'dev' }
+// process.env: {NODE_ENV: 'dev' }
 
 const envSchemas = z.object({
-    NODE_ENV: z.enum(['dev', 'test', 'production']).default('dev'),
-    PORT: z.coerce.number().default(3333),
+  NODE_ENV: z.enum(['dev', 'test', 'production']).default('dev'),
+  PORT: z.coerce.number().default(3333),
 })
 
 const _env = envSchemas.safeParse(process.env)
 
 if (_env.success === false) {
-    console.error("❌ Invalid environment variables", _env.error.format())
+  console.error('❌ Invalid environment variables', _env.error.format())
 
-    throw new Error('Invalid environment variables')
+  throw new Error('Invalid environment variables')
 }
 
-
-export const env = _env.data;
+export const env = _env.data
