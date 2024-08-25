@@ -1,9 +1,8 @@
-import { PrismaUsersRepository } from '@/repositories/prisma/prisma-users-repository'
 import { describe, expect, it } from 'vitest'
-import { RegisterUseCase } from '../register'
+import { RegisterUseCase } from './register'
 import { compare } from 'bcryptjs'
 import { InMemoryRepository } from '@/repositories/in-memory/im-memory-users-repository'
-import { UserAlredyExistError } from './user-alredy-exists-error'
+import { UserAlredyExistError } from './errors/user-alredy-exists-error'
 
 describe('Register Use Case', () => {
     it('should be able to register', async () => {
