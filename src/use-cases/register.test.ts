@@ -1,15 +1,22 @@
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { RegisterUseCase } from './register'
 import { compare } from 'bcryptjs'
 import { InMemoryRepository } from '@/repositories/in-memory/im-memory-users-repository'
 import { UserAlredyExistError } from './errors/user-alredy-exists-error'
 
-describe('Register Use Case', () => {
-    it('should be able to register', async () => {
-        const userRepository = new InMemoryRepository()
-        const registerUseCase = new RegisterUseCase(userRepository)
+let userRepository:  InMemoryRepository
+let sut: RegisterUseCase
 
-        const { user } = await registerUseCase.execute({
+
+describe('Register Use Case', () => {
+    beforeEach(() => {
+        userRepository = new InMemoryRepository()
+        sut = new RegisterUseCase(userRepository)
+    })
+
+    it('should be able to register', async () => {
+        
+        const { user } = await sut.execute({
             name: 'teste',
             email: 'teste@test.com',
             password: '123456'
@@ -20,10 +27,8 @@ describe('Register Use Case', () => {
 
 
     it('should hash user password upon registration', async () => {
-        const userRepository = new InMemoryRepository()
-        const registerUseCase = new RegisterUseCase(userRepository)
 
-        const { user } = await registerUseCase.execute({
+        const { user } = await sut.execute({
             name: 'teste',
             email: 'teste@test.com',
             password: '123456'
@@ -39,12 +44,10 @@ describe('Register Use Case', () => {
 
 
     it('should not be able to register with same email twice', async () => {
-        const userRepository = new InMemoryRepository()
-        const registerUseCase = new RegisterUseCase(userRepository)
 
         const email = 'teste@test.com'
 
-        await registerUseCase.execute({
+        await sut.execute({
             name: 'teste',
             email,
             password: '123456'
@@ -52,7 +55,7 @@ describe('Register Use Case', () => {
 
 
         await expect(() => 
-            registerUseCase.execute({
+            sut.execute({
                 name: 'teste',
                 email,
                 password: '123456'
