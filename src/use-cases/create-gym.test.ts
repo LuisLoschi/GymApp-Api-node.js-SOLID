@@ -23,8 +23,5 @@ describe('Create gym Use Case', () => {
         })
 
         expect(gym.id).toEqual(expect.any(String))
-    })
-
-
-    
+    })    
 })
