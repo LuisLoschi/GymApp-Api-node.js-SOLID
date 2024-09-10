@@ -3,7 +3,7 @@ import { verifyJWT } from '@/http/middleware/verify-jwt'
 import { search } from './search'
 import { nearby } from './nearby'
 import { create } from './create'
-import { verifyUserRole } from '@/http/middleware/only-admin'
+import { verifyUserRole } from '@/http/middleware/verify-user-role'
 
 
 export async function gymsRoutes(app: FastifyInstance) {
